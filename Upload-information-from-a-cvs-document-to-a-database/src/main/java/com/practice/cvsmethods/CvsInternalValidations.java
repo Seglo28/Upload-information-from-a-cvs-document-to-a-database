@@ -80,14 +80,11 @@ public class CvsInternalValidations {
 	 
 	 public boolean removeBOM (MultipartFile document) throws IOException {
 		 Path path = Paths.get("c:/upload_java/"+document.getOriginalFilename());
-		 File file = new File ("c:/upload_java/"+document.getOriginalFilename());
-		 
 		 
 		 if(this.BOMinside(document)) {
 			 byte[] bytes = Files.readAllBytes(path);
 			 
 			 ByteBuffer bb = ByteBuffer.wrap(bytes);
-			 System.out.println("ELIMINAR EL BOM " +"Encontramos el BOM en el metodo eliminar");
 			 
 			 byte[] bom = new byte[3];
 			 
@@ -95,13 +92,10 @@ public class CvsInternalValidations {
 			 
 			 byte[] contentAfterFirst3Bytes = new byte[bytes.length - 3];
 	          bb.get(contentAfterFirst3Bytes, 0, contentAfterFirst3Bytes.length);
-	          System.out.println("ELIMINAR EL BOM " +"Removimos el DOM!");
 	          
-	          //Write es un metodo ESTATICO
+	          //Write is a static method
 	          Files.write(path, contentAfterFirst3Bytes);
-		 } else {
-	          System.out.println("ELIMINAR EL BOM " +"This file doesn't contains UTF-8 BOM!");
-	      }
+		 }
 		return false;
 	 }
 }

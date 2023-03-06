@@ -14,17 +14,13 @@ import com.practice.cvsmethods.CvsPrincipalValidations;
 @RequestMapping("/StudentController")
 public class StudentController {
 	
-	CvsPrincipalValidations cvsPrincipal = new CvsPrincipalValidations();
-	@PostMapping("/pueba")
-	public String imprimiendoalgo(){
-		String result =  "holi";
-		System.out.println("Estoy en el metodo del controlador");
-		return result;
-	}
 	
-	@PostMapping("/prueba")
-	public String pruebaMetodos(@RequestParam MultipartFile document) throws IOException {
-		String result = cvsPrincipal.validatingCsvFile(document);
-		return result;
+	//This object is called from CvsPrincipalValidations class.
+	CvsPrincipalValidations cvsPrincipal = new CvsPrincipalValidations();
+	
+	//Validating cvs if this is a cvs file, and if contain utf8-BOM - if is true, delete.
+	@PostMapping("/validation")
+	public void validatingCsvDocument(@RequestParam MultipartFile document) throws IOException {
+		cvsPrincipal.validatingCsvFile(document);
 	}
 }
