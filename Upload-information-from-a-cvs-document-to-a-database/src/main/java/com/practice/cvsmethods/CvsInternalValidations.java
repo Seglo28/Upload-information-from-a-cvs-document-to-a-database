@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class CvsInternalValidations {
 
-	public boolean validatingPosibleCvsDocument(MultipartFile document) {
+	private boolean validatingPosibleCvsDocument(MultipartFile document) {
 		
 		System.out.println("estoy en el metodo POSIBLE");
 		boolean isOk = false;
@@ -78,7 +78,7 @@ public class CvsInternalValidations {
 				return this.isBoom(inputFile);
 	    }
 	 
-	 public boolean removeBOM (MultipartFile document) throws IOException {
+	 private boolean removeBOM (MultipartFile document) throws IOException {
 		 Path path = Paths.get("c:/upload_java/"+document.getOriginalFilename());
 		 
 		 if(this.BOMinside(document)) {
@@ -98,4 +98,13 @@ public class CvsInternalValidations {
 		 }
 		return false;
 	 }
+	 
+	 
+	 public boolean validatingCsvFile(MultipartFile document) throws IOException{	
+			if(this.validatingPosibleCvsDocument(document)) {
+				if(this.removeBOM(document)){
+				}
+			}
+			return false;
+		}
 }
