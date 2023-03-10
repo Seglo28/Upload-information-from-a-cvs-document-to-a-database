@@ -3,10 +3,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 
 @Entity
-//@Table(name="Student_information")
+@Table(name = "student_information")
 public class Student_information {
 	
 	@Id
