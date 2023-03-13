@@ -5,7 +5,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "student_information")
 public class Student_information {
@@ -31,13 +30,18 @@ public class Student_information {
 		this.telephone = telephone;
 	}
  
+	@Override
+	public String toString() {
+		return "Student_information [id=" + id + ", firts_name=" + firts_name + ", last_name=" + last_name + ", email="
+				+ email + ", telephone=" + telephone + "]";
+	}
 
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 
 
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -80,12 +84,4 @@ public class Student_information {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-
-	@Override
-	public String toString() {
-		return "Student_information [id=" + id + ", firts_name=" + firts_name + ", last_name=" + last_name + ", email="
-				+ email + ", telephone=" + telephone + "]";
-	}
-	
-	
 }

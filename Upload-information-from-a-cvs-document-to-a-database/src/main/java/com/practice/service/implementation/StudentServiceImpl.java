@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,18 +24,16 @@ public class StudentServiceImpl implements StudentService {
 		//Variables
 		String line = "";
 		int c=0;
-		
+		BufferedReader reader = new BufferedReader(new FileReader ("c:/upload_java/StudentInformation.csv"));
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader ("c:/upload_java/StudentInformation.csv"));
+			
 			
 			
 			while((line = reader.readLine()) != null) {
 				
-				if(c==0) {
-					
+				/*if(c==0) {
 					continue;
-				} else {
-					
+				} else {*/
 					String[] raw = line.split(";");
 					Student_information student = new Student_information();
 					
@@ -44,12 +44,38 @@ public class StudentServiceImpl implements StudentService {
 					studentRepository.save(student);	
 					
 					System.out.println("Done "+ studentRepository);
-				}
-				c++;
+				//}
+				//c++;
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Here is an exception: "+e);
 			e.printStackTrace();
+		}finally {
+			reader.close();
+			System.out.println("Se cerro el reader");
 		}
 	}
+
+	//Show a student by id
+	public Student_information findById(int id){
+		
+		//Crating an Student_information class object.
+		Student_information studentModel = new Student_information();
+		//Crating an Student_information empty project.
+		Student_information studentEntity = null;
+		
+		//Finding data by id
+		Optional<Student_information> optionalStudent = studentRepository.findById(id);
+		
+		//Checking if "id" is present in this optional or not
+		if(optionalStudent.isPresent()) {
+			//Getting data from optionalStudent to studentEntity
+			studentEntity = optionalStudent.get();
+			//Coping data from studentEntiry to srudenrModel
+			BeanUtils.copyProperties(studentEntity, studentModel);
+		}
+		return studentModel;
+		
+	}
 }
+
