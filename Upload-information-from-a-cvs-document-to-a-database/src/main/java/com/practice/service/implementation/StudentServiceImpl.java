@@ -75,7 +75,15 @@ public class StudentServiceImpl implements StudentService {
 			BeanUtils.copyProperties(studentEntity, studentModel);
 		}
 		return studentModel;
+	}
+	
+	//Find all students
+	public Iterable<Student_information> findAllStudent() {
+		Iterable<Student_information> findAll = studentRepository.findAll(); 
+		return findAll;
 		
 	}
+	
+	
 }
 

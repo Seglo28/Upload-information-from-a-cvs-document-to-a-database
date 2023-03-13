@@ -24,9 +24,14 @@ public class StudentController {
 	}
 	
 	//Show a student by id
-	@PostMapping("/showdata")
-	public Student_information showData (int id) {
+	@PostMapping("/showdatabyid")
+	public Student_information showDataById (int id) {
 		return studentService.findById(id);
+	}
+	
+	@PostMapping("/showdata")
+	public Iterable<Student_information> showData() {
+		return studentService.findAllStudent();
 	}
 	
 }
