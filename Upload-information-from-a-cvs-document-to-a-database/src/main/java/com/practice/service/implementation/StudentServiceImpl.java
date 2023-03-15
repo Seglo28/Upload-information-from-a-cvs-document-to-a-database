@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -79,11 +81,65 @@ public class StudentServiceImpl implements StudentService {
 	
 	//Find all students
 	public Iterable<Student_information> findAllStudent() {
-		Iterable<Student_information> findAll = studentRepository.findAll(); 
-		return findAll;
 		
+		Iterable<Student_information> findAllStudent = studentRepository.findAll(); 
+		if(findAllStudent.iterator().hasNext()) {
+			System.out.println("Te values are: "+findAllStudent);
+		}else {
+			System.out.println("The table is empty.-");
+		}
+		return findAllStudent;
 	}
 	
+	//Delete a student
+	public void delete(int id){
+		Optional<Student_information> optionalStudent = studentRepository.findById(id);
+
+		if(optionalStudent.isPresent()) {
+		studentRepository.deleteById(id);
+		System.out.println("Done.");
+		}else{
+			System.out.println(":(");	
+		}
+	}
 	
+	public void deleteAll () {
+			studentRepository.deleteAll();
+			System.out.println("Done.");
+		}
+	
+	
+	public String saveStudent(Student_information student) {
+		String message = "";
+		Student_information addOne = new Student_information();
+		String compareemail = "SELECT * FROM student_information WHERE email = '"+student.getEmail()+"'";
+		//String a = compareemail.isBlank();
+		System.out.println("METODO QUE VALIDA" +compareemail);
+
+		if (compareemail.isBlank()) {
+			message = "Dato repetido.";
+		}else{
+			addOne.setFirts_name(student.getFirts_name());
+			addOne.setLast_name(student.getLast_name());
+			addOne.setEmail(student.getEmail());
+			addOne.setTelephone(student.getTelephone());
+			studentRepository.save(addOne);
+			
+			message = "Registrado.";
+			System.out.println("METODO  " +compareemail);
+		}
+		return message;
+	}
+	
+	public boolean compare(Student_information student){
+		String a = student.getEmail();
+		String compareemail = "SELECT * FROM student_information WHERE email = '"+a+"'";
+		boolean validating = true;
+		
+		validating = (compareemail.isEmpty())? true:false;
+		System.out.println("METODO QUE VALIDA" +validating);
+		return validating;
+		
+	}
 }
 
