@@ -52,9 +52,4 @@ public class StudentController {
 	public String saveStudent(@RequestBody Student_information student) {
 		return studentService.saveStudent(student);
 	}
-	
-	@PostMapping("/a")
-	public boolean a(Student_information s){
-		return studentService.compare(s);
-	}
 }

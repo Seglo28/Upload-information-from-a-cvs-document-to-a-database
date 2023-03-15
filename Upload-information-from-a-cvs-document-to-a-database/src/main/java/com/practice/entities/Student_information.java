@@ -1,10 +1,12 @@
 package com.practice.entities;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+//@ = annotations
 @Entity
 @Table(name = "student_information")
 public class Student_information {
@@ -12,9 +14,13 @@ public class Student_information {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(name="firts_name")
 	private String firts_name = "";
+	@Column(name="last_name")
 	private String last_name = "";
+	@Column(name = "email", unique = true)
 	private String email = "";
+	@Column(name="telephone")
 	private String telephone = "";
 	
 	public Student_information() {

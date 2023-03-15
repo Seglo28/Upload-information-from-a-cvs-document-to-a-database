@@ -112,34 +112,18 @@ public class StudentServiceImpl implements StudentService {
 	public String saveStudent(Student_information student) {
 		String message = "";
 		Student_information addOne = new Student_information();
-		String compareemail = "SELECT * FROM student_information WHERE email = '"+student.getEmail()+"'";
-		//String a = compareemail.isBlank();
-		System.out.println("METODO QUE VALIDA" +compareemail);
-
-		if (compareemail.isBlank()) {
-			message = "Dato repetido.";
-		}else{
+		
+		if (studentRepository.findByEmail(student.getEmail()) == null) {
 			addOne.setFirts_name(student.getFirts_name());
 			addOne.setLast_name(student.getLast_name());
 			addOne.setEmail(student.getEmail());
 			addOne.setTelephone(student.getTelephone());
 			studentRepository.save(addOne);
-			
 			message = "Registrado.";
-			System.out.println("METODO  " +compareemail);
+		}else{
+			message = "Dato repetido.";
 		}
 		return message;
-	}
-	
-	public boolean compare(Student_information student){
-		String a = student.getEmail();
-		String compareemail = "SELECT * FROM student_information WHERE email = '"+a+"'";
-		boolean validating = true;
-		
-		validating = (compareemail.isEmpty())? true:false;
-		System.out.println("METODO QUE VALIDA" +validating);
-		return validating;
-		
 	}
 }
 
