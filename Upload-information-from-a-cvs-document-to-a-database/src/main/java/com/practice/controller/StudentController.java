@@ -52,4 +52,11 @@ public class StudentController {
 	public String saveStudent(@RequestBody Student_information student) {
 		return studentService.saveStudent(student);
 	}
+	
+	//Update a student data
+	@PostMapping("/update")
+	public Student_information updateStudentData(@RequestBody Student_information student){
+		return studentService.updateStudent(student);
+	}
+	
 }

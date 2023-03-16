@@ -108,7 +108,7 @@ public class StudentServiceImpl implements StudentService {
 			System.out.println("Done.");
 		}
 	
-	
+	//Add a new Student
 	public String saveStudent(Student_information student) {
 		String message = "";
 		Student_information addOne = new Student_information();
@@ -125,5 +125,37 @@ public class StudentServiceImpl implements StudentService {
 		}
 		return message;
 	}
-}
+	
+	//Update student
+	public Student_information updateStudent(Student_information student){
 
+		//I call to the isUsser method because the optional didn't accept a class
+		//variable, only primitives; and for that, UpdateStudent pass a parameter
+		//called: "student.getId".
+		if(this.isUsser(student.getId())) {
+			
+			//Saving data
+			Student_information data = studentRepository.findById(student.getId()).get();
+			data.setFirts_name(student.getFirts_name());
+			data.setLast_name(student.getLast_name());
+			data.setEmail(student.getEmail());
+			data.setTelephone(student.getTelephone());
+			studentRepository.save(data);		
+		}
+		return this.findById(student.getId());
+	}
+	
+	//Validating if an user is present in "student_information" table.
+	//Optional is needed only, primitives arguments. I passed and argument
+	// here, and now it type is primitive.
+	private boolean isUsser(int id){
+		boolean result = true;
+
+		//Validating if this student id exist.
+		Optional <Student_information> studentId = studentRepository.findById(id);
+		result = (studentId.isPresent())? true:false;
+		return result;
+	}
+	
+	
+}
